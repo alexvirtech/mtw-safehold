@@ -14,6 +14,7 @@
     - comparison with https://iancoleman.io/
     - real transactions for all coins (BTC, ETH, LTC, DASH, DOGE)
 - common
-    - implementation in PWA (or Electron)
+    - implementation in npm package    
+    - safehold - PWA (or Electron)
     - subdomain 
     - explanation for MTW (to include in tools)    

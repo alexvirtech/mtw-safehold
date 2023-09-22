@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'preact/hooks'
+import { createMnemonic } from '../index.js'
 
 export default function Test() {
     const [sign, setSign] = useState('')
     const [account, setAccount] = useState('')
+    const [mnemonic, setMnemonic] = useState('')
 
     const ph = 'material blame next enact page acoustic security ill certain cousin grunt series'
     
@@ -47,6 +49,10 @@ export default function Test() {
     }
 
     useEffect(() => {
+
+        const mn = createMnemonic()
+        setMnemonic(mn)
+
         if (window.generateMnemonic) {
             const d = window.getDerivationPath()
             const m = ph //window.generateMnemonic()
@@ -61,8 +67,9 @@ export default function Test() {
     }, [])
 
     return (
-        <div class="mt-4 w-[500px] mx-auto">
-            <div>
+        <div class="mt-4 w-[800px] mx-auto">
+            <div>{mnemonic}</div>
+            <div class="mt-4">
                 <pre>{JSON.stringify(account,null,2)}</pre>
             </div>
             <div class="mt-4 break-all">{sign}</div>
