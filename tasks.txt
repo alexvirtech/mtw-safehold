@@ -1,0 +1,19 @@
+- gui
+    - mnemonic
+    - coin choice select
+    - coin derivation params
+    - account output 
+    - transaction input
+    - transaction output
+    - design like in MTW
+    - page for send transactions (for test)
+- methods
+    - add separate processing for ETH
+    - add send signed transaction methods
+- testing
+    - comparison with https://iancoleman.io/
+    - real transactions for all coins (BTC, ETH, LTC, DASH, DOGE)
+- common
+    - implementation in PWA (or Electron)
+    - subdomain 
+    - explanation for MTW (to include in tools)    
