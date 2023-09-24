@@ -11,7 +11,7 @@ let bip32ExtendedKey = null
 let network = libs.bitcoin.networks.bitcoin
 
 let coin = 0 // default coin - BTC
-const purpose = 44 // 
+//let purpose = 84 // 
 
 /*let purpose = 44
 
@@ -32,29 +32,44 @@ function generateMnemonic() { //
 }
 
 // account by mnemonic and derivation path
-function createAccount(phrase,coin,account,change,index) { //    
-    if(!phrase) phrase = generateMnemonic()
+function createAccountSH(phrase, path, index) { //    
+    if (!phrase) phrase = generateMnemonic()
+    //purpose = 84
     calcBip32RootKeyFromSeed(phrase, '')
-    derivation = getDerivation(coin,account,change)
-    const values = calcValues(derivation, index)
-    return  {...values,mnemonic:phrase}
+    const values = calcValues(path, index)
+    return { ...values, mnemonic: phrase }
 }
 
-function getDerivation(coin=0,account=0,change=0) { //
+
+// account by mnemonic and derivation path
+function createAccount(phrase, coin, account, change, index) { //    
+    if (!phrase) phrase = generateMnemonic()
+    calcBip32RootKeyFromSeed(phrase, '')
+    derivation = getDerivation(coin, account, change)
+    const values = calcValues(derivation, index)
+    return { ...values, mnemonic: phrase }
+}
+
+function getDerivation(coin = 0, account = 0, change = 0) { //
     let path = "m/"
     path += purpose + "'/"
     path += coin + "'/"
     path += account + "'/"
-    path += change 
+    path += change
     return path
 }
 
-function calcValues(derivation,index) {
+function calcValues(derivation, index) {
     bip32ExtendedKey = calcBip32ExtendedKey(derivation)
     let key = bip32ExtendedKey.derive(index)
     let keyPair = key.keyPair
     // get address
     let address = keyPair.getAddress().toString()
+    if (derivation.startsWith('m/84')) { // TBD
+        var keyhash = libs.bitcoin.crypto.hash160(key.getPublicKeyBuffer())
+        var scriptpubkey = libs.bitcoin.script.witnessPubKeyHash.output.encode(keyhash)
+        address = libs.bitcoin.address.fromOutputScript(scriptpubkey, network)
+    }
     // get privkey
     let hasPrivkey = !key.isNeutered()
     let privkey = "NA"
@@ -122,7 +137,7 @@ const networks = [
         onSelect: function () {
             network = libs.bitcoin.networks.bitcoin
             coin = 0,
-            purpose = 84
+                purpose = 84
         },
     },
     {
@@ -131,7 +146,7 @@ const networks = [
         onSelect: function () {
             network = libs.bitcoin.networks.dash
             coin = 5,
-            purpose = 44
+                purpose = 44
         },
     },
     {
@@ -140,7 +155,7 @@ const networks = [
         onSelect: function () {
             network = libs.bitcoin.networks.dogecoin
             coin = 3,
-            purpose = 44
+                purpose = 44
         },
     },
     {
@@ -149,7 +164,7 @@ const networks = [
         onSelect: function () {
             network = libs.bitcoin.networks.bitcoin
             coin = 60,
-            purpose = 44
+                purpose = 44
         },
     },
     {
@@ -158,7 +173,7 @@ const networks = [
         onSelect: function () {
             network = libs.bitcoin.networks.litecoin
             coin = 2,
-            purpose = 84
+                purpose = 84
         },
     }
 ]
@@ -169,11 +184,11 @@ const networks = [
 // for bitcoin based networks
 // may be taken from the blockchain 
 // example: https://api.blockcypher.com/v1/btc/main/addrs/[sender address]
-function getTxId(utxos){
+function getTxId(utxos) {
     if (utxos && utxos.length > 0) {
         const txId = utxos[0].tx_hash  // Taking the first UTXO's txId for demo purposes.
         console.log(txId)
-        return txId                
+        return txId
     }
 }
 
@@ -183,7 +198,7 @@ function getTxId(utxos){
 // utxos: sender's UTXOs - may be taken from the blockchain 
 // recipientAddress: recipient's address
 // amount: amount to send in satoshi (1 BTC = 100,000,000 satoshi)
-function createSignatureB(network,senderPrivateKey,utxos,recipientAddress,amount){            
+function createSignatureB(network, senderPrivateKey, utxos, recipientAddress, amount) {
     // This is just a demo. In real scenarios, determine UTXOs, amount, fees, etc.
     const tx = new libs.bitcoin.TransactionBuilder(libs.bitcoin.networks[network])
     const txId = getTxId(utxos) //'your UTXO transaction id' 
