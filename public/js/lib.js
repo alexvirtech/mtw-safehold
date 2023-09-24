@@ -78,15 +78,6 @@ function calcValues(derivation,index) {
     return { derivation, index, address, pubkey, privkey }
 }
 
-
-/*function createAccount_(phrase,derivation,index) { //    
-    //let entropy = mnemonic.toRawEntropyHex(phrase)
-    calcBip32RootKeyFromSeed(phrase, '')
-    const values = calcValues(index, derivation)
-    return  values
-}
-*/
-
 function calcBip32RootKeyFromSeed(phrase, passphrase) { //
     seed = mnemonic.toSeed(phrase, passphrase)
     bip32RootKey = libs.bitcoin.HDNode.fromSeedHex(seed, network)
@@ -122,37 +113,8 @@ function calcBip32ExtendedKey(path) {  //
     return extendedKey
 }
 
-
-
-/*function calcValues_(index, derivation) {
-    bip32ExtendedKey = calcBip32ExtendedKey(derivation)
-    let key = bip32ExtendedKey.derive(index)
-    let keyPair = key.keyPair
-    // get address
-    let address = keyPair.getAddress().toString()
-    // get privkey
-    let hasPrivkey = !key.isNeutered()
-    let privkey = "NA"
-    if (hasPrivkey) {
-        privkey = keyPair.toWIF()
-    }
-
-    let pubkey = keyPair.getPublicKeyBuffer().toString('hex')
-    if (coin == 60) {
-        let pubkeyBuffer = keyPair.getPublicKeyBuffer()
-        let ethPubkey = libs.ethUtil.importPublic(pubkeyBuffer)
-        let addressBuffer = libs.ethUtil.publicToAddress(ethPubkey)
-        let hexAddress = addressBuffer.toString('hex')
-        let checksumAddress = libs.ethUtil.toChecksumAddress(hexAddress)
-        address = libs.ethUtil.addHexPrefix(checksumAddress)
-        pubkey = libs.ethUtil.addHexPrefix(pubkey)
-        if (hasPrivkey) {
-            privkey = libs.ethUtil.bufferToHex(keyPair.d.toBuffer(32))
-        }
-    }
-    return { derivation, index, address, pubkey, privkey }
-}*/
-
+//////////////////////////////////
+// TB removed
 const networks = [
     {
         symbol: "BTC",

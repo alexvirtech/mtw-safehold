@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tailwindcss/aspect-ratio": "^0.4.2",
     "lodash": "^4.17.21",
     "preact": "^10.16.0"
   },
