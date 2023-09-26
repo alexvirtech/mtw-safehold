@@ -7,26 +7,29 @@ const AddCoinSH = ({ callback = console.log }) => {
     const [change, setChange] = useState(0)
     const [index, setIndex] = useState(0)
     const [coin, setCoin] = useState('')
-    //const [derivation, setDerivation] = useState('')
+    const [purpose, setPurpose] = useState('')
     const [symbol, setSymbol] = useState(null)
     const [list, setList] = useState([])
-    //const [mnemonic, setMnemonic] = useState('')
-    //const testDp = 'm/44\'/60\'/'
+    const [network,setNetwork] = useState(window.libs.bitcoin.networks.bitcoin)
 
     useEffect(() => {
         const lst = Object.entries(coinList).filter(([sym, val]) => val.purpose)
         setList(lst)
         // 
         setSymbol("BTC")
+        callback({ network, symbol, coin, account, change, index })
     }, [])
 
     useEffect(() => {
         const ls = list.find(l => l[0] === symbol)
-        if (symbol && ls[1].dp) {
-            setCoin(`m/${ls[1].purpose}'/${ls[1].coin}'/`)
+        if (symbol && ls[1].network) {
+            //setCoin(`m/${ls[1].purpose}'/${ls[1].coin}'/`)
+            setCoin(ls[1].coin)
+            setPurpose(ls[1].purpose)
             setAccount(0)
             setChange(0)
             setIndex(0)
+            setNetwork(ls[1].network)
         }
     }, [symbol])
 
@@ -37,8 +40,8 @@ const AddCoinSH = ({ callback = console.log }) => {
     }
 
     useEffect(() => {
-        callback({ symbol, coin, account, change, index })
-    }, [symbol, coin, account, change, index])
+        callback({ network, symbol, coin, account, change, index })
+    }, [network, symbol, coin, account, change, index])
 
     return (
         <div class="w-[500px] mx-auto">
@@ -60,7 +63,7 @@ const AddCoinSH = ({ callback = console.log }) => {
                         <div class={mStyles.label}>Derivation path</div>
                     </div>
                     <div class="flex border border-m-blue-light-4 rounded px-1 bg-white ">
-                        <div class="py-2 pl-3 w-[90px]">{coin}</div>
+                        <div class="py-2 pl-3 w-[90px]">{`m/${purpose}'/${coin}'/`}</div>
                         <input
                             type="number"
                             min="0"

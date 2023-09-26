@@ -1,20 +1,23 @@
-- gui
-    - mnemonic
-    - coin choice select
-    - coin derivation params
-    - account output 
-    - transaction input
-    - transaction output
-    - design like in MTW
-    - page for send transactions (for test)
-- methods
-    - add separate processing for ETH
-    - add send signed transaction methods
-- testing
-    - comparison with https://iancoleman.io/
-    - real transactions for all coins (BTC, ETH, LTC, DASH, DOGE)
-- common
-    - implementation in npm package    
-    - safehold - PWA (or Electron)
+//////////////////// 26.09 - 29.09 ////////////////////
+- methods for all coins
+    //- create account
+    - create signed transaction 
+    - send signed transaction
+    - check balance
+    - tests for real transactions for all coins (BTC, ETH, LTC, DASH, DOGE)
+
+- main app integration
+    - create account
+    - create signed transaction 
+    - send signed transaction
+    - check balance
+    - page in tools 
+        - check balance 
+        - send signed transaction
+        - explanation
+
+- separate app - PWA
+    - gui
+    - PWA implementation
     - subdomain 
     - explanation for MTW (to include in tools)    

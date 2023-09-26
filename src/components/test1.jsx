@@ -7,8 +7,11 @@ import { mStyles } from "../utils/styles"
 export default function Test1() {
     const [tm, setTm] = useState(null)
     const [account, setAccount] = useState()
-    const [mnemonic, setMnemonic] = useState('exotic coach vintage sustain noise design cereal become file critic dove decade')
+    const [mnemonic, setMnemonic] = useState('material blame next enact page acoustic security ill certain cousin grunt series')
     const [res, setRes] = useState()
+
+    // coinomi 
+    //material blame next enact page acoustic security ill certain cousin grunt series
 
     useEffect(() => {
         //setTm(new Date().getTime())
@@ -20,7 +23,7 @@ export default function Test1() {
      }*/
 
     const handleCreate = () => {
-        //setRes({...account, mnemonic})
+        
         const tm1 = new Date().getTime()
         setTm(tm1)
     }
@@ -32,12 +35,12 @@ export default function Test1() {
     return (
         <>
             <div class="mt-4 w-[800px] mx-auto">
-                <ComAddMnemonicSH callback={(m) => setMnemonic(m)} />
+                <ComAddMnemonicSH callback={(m) => setMnemonic(m)} mnm={mnemonic}/>
                 <AddCoinSH callback={(data) => setAccount(data)} />
                 <div class="mt-8 flex justify-center">
                     <button type="button" class={mStyles.button} onClick={handleCreate}>Create Account</button>
                 </div>
-                {mnemonic!=='' && account && res && <div>
+                {(mnemonic!=='' && account && res || true) && <div>
                     <div class="mt-4">
                         <div class={mStyles.labelB + " mb-1"}>Inputs:</div>
                     </div>

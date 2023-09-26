@@ -9,8 +9,13 @@ let seed = null
 let bip32RootKey = null
 let bip32ExtendedKey = null
 let network = libs.bitcoin.networks.bitcoin
-
 let coin = 0 // default coin - BTC
+//network = libs.bitcoin.networks.litecoin
+//setHdCoin(2)
+
+
+
+
 //let purpose = 84 // 
 
 /*let purpose = 44
@@ -40,7 +45,6 @@ function createAccountSH(phrase, path, index) { //
     return { ...values, mnemonic: phrase }
 }
 
-
 // account by mnemonic and derivation path
 function createAccount(phrase, coin, account, change, index) { //    
     if (!phrase) phrase = generateMnemonic()
@@ -59,7 +63,7 @@ function getDerivation(coin = 0, account = 0, change = 0) { //
     return path
 }
 
-function calcValues(derivation, index) {
+function calcValues(derivation, index) {   
     bip32ExtendedKey = calcBip32ExtendedKey(derivation)
     let key = bip32ExtendedKey.derive(index)
     let keyPair = key.keyPair
@@ -68,6 +72,7 @@ function calcValues(derivation, index) {
     if (derivation.startsWith('m/84')) { // TBD
         var keyhash = libs.bitcoin.crypto.hash160(key.getPublicKeyBuffer())
         var scriptpubkey = libs.bitcoin.script.witnessPubKeyHash.output.encode(keyhash)
+
         address = libs.bitcoin.address.fromOutputScript(scriptpubkey, network)
     }
     // get privkey
